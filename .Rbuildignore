@@ -5,3 +5,6 @@
 ^docs$
 ^index\.qmd$
 ^styles\.scss$
+^_quarto\.yml$
+^\.quarto$
+^scripts$
