@@ -9,7 +9,7 @@ format:
     chalkboard: false
     preview-links: auto
 execute:
-  echo: true
+  echo: false
   warning: false
   message: false
 ---
