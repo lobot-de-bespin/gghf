@@ -1,4 +1,4 @@
-.helse_colours <- c(
+.hf_colours <- c(
   blue = "#003087",
   light_blue = "#6CACE4",
   grey_blue = "#BFCED6",
@@ -22,12 +22,12 @@
 #'
 #' @return A named character vector of HEX colours.
 #' @export
-helse_palette <- function(names = NULL) {
+hf_palette <- function(names = NULL) {
   if (is.null(names)) {
-    return(.helse_colours)
+    return(.hf_colours)
   }
 
-  unknown <- setdiff(names, names(.helse_colours))
+  unknown <- setdiff(names, names(.hf_colours))
   if (length(unknown) > 0) {
     stop(
       "Unknown colour name(s): ",
@@ -36,11 +36,11 @@ helse_palette <- function(names = NULL) {
     )
   }
 
-  .helse_colours[names]
+  .hf_colours[names]
 }
 
-.helse_discrete_palette <- function(reverse = FALSE) {
-  colours <- unname(.helse_colours)
+.hf_discrete_palette <- function(reverse = FALSE) {
+  colours <- unname(.hf_colours)
   if (reverse) {
     colours <- rev(colours)
   }
@@ -54,26 +54,26 @@ helse_palette <- function(names = NULL) {
 #'
 #' @return A ggplot2 scale.
 #' @export
-scale_colour_helse <- function(..., reverse = FALSE) {
+scale_colour_hf <- function(..., reverse = FALSE) {
   ggplot2::discrete_scale(
     aesthetics = "colour",
-    scale_name = "helse",
-    palette = .helse_discrete_palette(reverse = reverse),
+    scale_name = "hf",
+    palette = .hf_discrete_palette(reverse = reverse),
     ...
   )
 }
 
-#' @rdname scale_colour_helse
+#' @rdname scale_colour_hf
 #' @export
-scale_color_helse <- scale_colour_helse
+scale_color_hf <- scale_colour_hf
 
-#' @rdname scale_colour_helse
+#' @rdname scale_colour_hf
 #' @export
-scale_fill_helse <- function(..., reverse = FALSE) {
+scale_fill_hf <- function(..., reverse = FALSE) {
   ggplot2::discrete_scale(
     aesthetics = "fill",
-    scale_name = "helse",
-    palette = .helse_discrete_palette(reverse = reverse),
+    scale_name = "hf",
+    palette = .hf_discrete_palette(reverse = reverse),
     ...
   )
 }

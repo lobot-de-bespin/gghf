@@ -1,14 +1,14 @@
-\name{scale_colour_helse}
-\alias{scale_colour_helse}
-\alias{scale_color_helse}
-\alias{scale_fill_helse}
+\name{scale_colour_hf}
+\alias{scale_colour_hf}
+\alias{scale_color_hf}
+\alias{scale_fill_hf}
 \title{ggplot2 colour and fill scales for Norwegian Health Trust colours}
 \usage{
-scale_colour_helse(..., reverse = FALSE)
+scale_colour_hf(..., reverse = FALSE)
 
-scale_color_helse(..., reverse = FALSE)
+scale_color_hf(..., reverse = FALSE)
 
-scale_fill_helse(..., reverse = FALSE)
+scale_fill_hf(..., reverse = FALSE)
 }
 \arguments{
 \item{...}{Additional arguments passed to the ggplot2 scale.}

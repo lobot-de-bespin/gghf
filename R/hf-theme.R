@@ -10,13 +10,13 @@
 #'
 #' @return A ggplot2 theme.
 #' @export
-theme_helse <- function(
+theme_hf <- function(
   base_size = 11,
   base_family = "Calibri",
   title_family = base_family
 ) {
-  blue <- .helse_colours[["blue"]]
-  grey_blue <- .helse_colours[["grey_blue"]]
+  blue <- .hf_colours[["blue"]]
+  grey_blue <- .hf_colours[["grey_blue"]]
 
   ggplot2::theme_minimal(base_size = base_size, base_family = base_family) +
     ggplot2::theme(

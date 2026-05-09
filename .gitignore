@@ -3,6 +3,8 @@
 .RData
 .Ruserdata
 *.Rcheck/
-docs/
 Meta/
 doc/
+
+/.quarto/
+**/*.quarto_ipynb

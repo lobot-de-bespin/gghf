@@ -1,0 +1,28 @@
+/*-- scss:defaults --*/
+
+$font-family-sans-serif: "Calibri", "Arial", sans-serif;
+$presentation-heading-color: #003087;
+$presentation-title-slide-text-align: left;
+$link-color: #003087;
+
+/*-- scss:rules --*/
+
+.reveal {
+  color: #1f2933;
+}
+
+.reveal .title {
+  color: #003087;
+}
+
+.reveal h2 {
+  color: #003087;
+}
+
+.reveal .slide-number {
+  color: #003087;
+}
+
+.reveal pre code {
+  max-height: 430px;
+}

@@ -5,10 +5,10 @@
 
 The package is intentionally limited to plot styling primitives:
 
-- `theme_helse()` for a clean ggplot2 theme
-- `scale_colour_helse()` / `scale_color_helse()` for discrete colour scales
-- `scale_fill_helse()` for discrete fill scales
-- `helse_palette()` for direct access to official HEX colours
+- `theme_hf()` for a clean ggplot2 theme
+- `scale_colour_hf()` / `scale_color_hf()` for discrete colour scales
+- `scale_fill_hf()` for discrete fill scales
+- `hf_palette()` for direct access to official HEX colours
 
 It does not include or recreate the protected prikkekors symbol, health trust
 logos, or other trademarked sender marks.
@@ -16,9 +16,13 @@ logos, or other trademarked sender marks.
 ## Installation
 
 ```r
-# Private repository while the package is under development:
-# pak::pak("lobot-de-bespin/gghf")
+pak::pak("lobot-de-bespin/gghf")
 ```
+
+## Presentation
+
+A short Quarto presentation is published with GitHub Pages:
+<https://lobot-de-bespin.github.io/gghf/>
 
 ## Example
 
@@ -28,7 +32,7 @@ library(gghf)
 
 ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(cyl))) +
   geom_boxplot(width = 0.65) +
-  scale_fill_helse(guide = "none") +
+  scale_fill_hf(guide = "none") +
   labs(
     title = "Drivstofforbruk etter sylindere",
     subtitle = "Eksempelplott med helseforetakspalett",
@@ -36,7 +40,7 @@ ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(cyl))) +
     y = "Miles per gallon",
     caption = "Kilde: mtcars"
   ) +
-  theme_helse()
+  theme_hf()
 ```
 
 ## Source

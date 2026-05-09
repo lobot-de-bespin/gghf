@@ -1,8 +1,8 @@
-\name{helse_palette}
-\alias{helse_palette}
+\name{hf_palette}
+\alias{hf_palette}
 \title{Norwegian Health Trust colour palette}
 \usage{
-helse_palette(names = NULL)
+hf_palette(names = NULL)
 }
 \arguments{
 \item{names}{Optional colour names. If \code{NULL}, all colours are returned.}

@@ -2,3 +2,6 @@
 ^\.gitignore$
 ^README\.Rmd$
 ^gghf\.Rproj$
+^docs$
+^index\.qmd$
+^styles\.scss$

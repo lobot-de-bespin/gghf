@@ -1,8 +1,8 @@
-\name{theme_helse}
-\alias{theme_helse}
+\name{theme_hf}
+\alias{theme_hf}
 \title{ggplot2 theme for Norwegian Health Trust plots}
 \usage{
-theme_helse(base_size = 11, base_family = "Calibri", title_family = base_family)
+theme_hf(base_size = 11, base_family = "Calibri", title_family = base_family)
 }
 \arguments{
 \item{base_size}{Base font size.}
