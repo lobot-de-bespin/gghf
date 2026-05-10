@@ -100,6 +100,19 @@ scale_fill_hf <- function(..., reverse = FALSE) {
   resolved
 }
 
+.hf_tint_colour <- function(colour, amount = 0.65) {
+  rgb <- grDevices::col2rgb(.hf_resolve_colours(colour))[, 1]
+  tinted <- round(rgb + (255 - rgb) * amount)
+  grDevices::rgb(tinted[1], tinted[2], tinted[3], maxColorValue = 255)
+}
+
+.hf_warm_heat_colours <- function() {
+  c(
+    .hf_tint_colour("yellow"),
+    unname(.hf_resolve_colours(c("yellow", "orange", "red", "purple")))
+  )
+}
+
 #' Continuous ggplot2 fill scales for heatmaps
 #'
 #' These scales are intended for heatmaps and other continuous fill aesthetics
@@ -123,6 +136,28 @@ scale_fill_hf_tonal <- function(
   na.value = "#F4F6F8"
 ) {
   resolved <- .hf_resolve_colours(colours)
+  if (reverse) {
+    resolved <- rev(resolved)
+  }
+
+  ggplot2::scale_fill_gradientn(
+    colours = resolved,
+    values = values,
+    na.value = na.value,
+    ...
+  )
+}
+
+#' @rdname scale_fill_hf_tonal
+#'
+#' @export
+scale_fill_hf_warm <- function(
+  ...,
+  reverse = FALSE,
+  values = NULL,
+  na.value = "#F4F6F8"
+) {
+  resolved <- .hf_warm_heat_colours()
   if (reverse) {
     resolved <- rev(resolved)
   }

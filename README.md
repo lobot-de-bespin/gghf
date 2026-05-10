@@ -11,8 +11,8 @@ The package is intentionally limited to plot styling primitives:
 - `theme_hf()` for a clean ggplot2 theme
 - `scale_colour_hf()` / `scale_color_hf()` for discrete colour scales
 - `scale_fill_hf()` for discrete fill scales
-- `scale_fill_hf_tonal()` / `scale_fill_hf_diverging()` for continuous
-  heatmaps
+- `scale_fill_hf_tonal()` / `scale_fill_hf_warm()` /
+  `scale_fill_hf_diverging()` for continuous heatmaps
 - `hf_palette()` for direct access to official HEX colours
 
 It does not include or recreate the protected prikkekors symbol, health
@@ -149,6 +149,8 @@ The same profile colours can support several heatmap conventions. Three
 common starting points are:
 
 - tonal/sequential heatmaps for intensity or volume
+- warm sequential heatmaps for pressure, escalation, or high-value
+  emphasis
 - diverging heatmaps for signed deviations around a midpoint
 - classified/status heatmaps for values that map to operational
   thresholds
@@ -208,6 +210,27 @@ ggplot(heatmap_df, aes(month, service, fill = activity_index)) +
 ```
 
 <img src="man/figures/README-heatmap-tonal-1.png" width="100%" style="display: block; margin: auto;" />
+
+### Warm heatmap
+
+``` r
+ggplot(heatmap_df, aes(month, service, fill = activity_index)) +
+  geom_tile(colour = "white", linewidth = 0.7) +
+  scale_fill_hf_warm(
+    breaks = seq(70, 130, by = 20),
+    guide = guide_colourbar(barwidth = 10, barheight = 0.5, title.position = "top"),
+    name = "Index"
+  ) +
+  coord_equal() +
+  labs(
+    title = "Warm heatmap",
+    subtitle = "Light yellow tint, then profile yellow, orange, red, and purple",
+    x = NULL,
+    y = NULL
+  )
+```
+
+<img src="man/figures/README-heatmap-warm-1.png" width="100%" style="display: block; margin: auto;" />
 
 ### Diverging heatmap
 

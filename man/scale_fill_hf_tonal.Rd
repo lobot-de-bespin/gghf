@@ -1,11 +1,19 @@
 \name{scale_fill_hf_tonal}
 \alias{scale_fill_hf_tonal}
+\alias{scale_fill_hf_warm}
 \alias{scale_fill_hf_diverging}
 \title{Continuous ggplot2 fill scales for heatmaps}
 \usage{
 scale_fill_hf_tonal(
   ...,
   colours = c("grey_blue", "light_green", "mint", "green", "blue"),
+  reverse = FALSE,
+  values = NULL,
+  na.value = "#F4F6F8"
+)
+
+scale_fill_hf_warm(
+  ...,
   reverse = FALSE,
   values = NULL,
   na.value = "#F4F6F8"
@@ -44,4 +52,6 @@ A ggplot2 scale.
 \description{
 Continuous ggplot2 fill scales for heatmaps and other continuous fill
 aesthetics where the profile colours should be used as a gradient.
+\code{scale_fill_hf_warm()} uses a light tint of the profile yellow followed
+by the official yellow, orange, red, and purple profile colours.
 }
