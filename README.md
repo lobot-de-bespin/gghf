@@ -11,6 +11,8 @@ The package is intentionally limited to plot styling primitives:
 - `theme_hf()` for a clean ggplot2 theme
 - `scale_colour_hf()` / `scale_color_hf()` for discrete colour scales
 - `scale_fill_hf()` for discrete fill scales
+- `scale_fill_hf_tonal()` / `scale_fill_hf_diverging()` for continuous
+  heatmaps
 - `hf_palette()` for direct access to official HEX colours
 
 It does not include or recreate the protected prikkekors symbol, health
@@ -140,6 +142,124 @@ ggplot(trend, aes(month, value, group = service, colour = service)) +
 ```
 
 <img src="man/figures/README-small-multiples-1.png" width="100%" style="display: block; margin: auto;" />
+
+## Heatmaps
+
+The same profile colours can support several heatmap conventions. Three
+common starting points are:
+
+- tonal/sequential heatmaps for intensity or volume
+- diverging heatmaps for signed deviations around a midpoint
+- classified/status heatmaps for values that map to operational
+  thresholds
+
+``` r
+heatmap_services <- c(
+  "Akutt", "Barn", "Bildediagnostikk", "Kirurgi",
+  "Lab", "Medisin", "Psykisk helse", "Screening"
+)
+
+heatmap_df <- expand.grid(
+  service = factor(heatmap_services, levels = rev(heatmap_services)),
+  month = factor(month.abb[1:8], levels = month.abb[1:8])
+)
+
+heatmap_df$activity_index <- c(
+  81, 84, 86, 89, 93, 95, 98, 101,
+  72, 73, 76, 78, 81, 84, 86, 88,
+  95, 98, 101, 104, 108, 111, 113, 116,
+  88, 90, 91, 95, 97, 101, 104, 106,
+  104, 108, 112, 116, 121, 125, 128, 132,
+  91, 94, 96, 98, 103, 106, 108, 112,
+  74, 77, 79, 82, 84, 86, 89, 91,
+  68, 70, 73, 77, 79, 83, 87, 90
+)
+
+heatmap_df$deviation <- c(
+  -5, -3, -1, 1, 3, 4, 6, 7,
+  -7, -5, -3, -1, 0, 2, 3, 5,
+  -2, 0, 2, 4, 6, 8, 9, 11,
+  -4, -2, 0, 2, 4, 5, 7, 8,
+  1, 3, 5, 7, 9, 11, 12, 14,
+  -3, -1, 1, 3, 5, 6, 8, 9,
+  -8, -6, -5, -3, -1, 1, 3, 4,
+  -10, -8, -6, -4, -2, 0, 2, 4
+)
+```
+
+### Tonal heatmap
+
+``` r
+ggplot(heatmap_df, aes(month, service, fill = activity_index)) +
+  geom_tile(colour = "white", linewidth = 0.7) +
+  scale_fill_hf_tonal(
+    colours = c("grey_blue", "light_green", "mint", "green", "blue"),
+    breaks = seq(70, 130, by = 20),
+    guide = guide_colourbar(barwidth = 10, barheight = 0.5, title.position = "top"),
+    name = "Index"
+  ) +
+  coord_equal() +
+  labs(
+    title = "Tonal heatmap",
+    subtitle = "Best for ordered intensity, volume, or rate",
+    x = NULL,
+    y = NULL
+  )
+```
+
+<img src="man/figures/README-heatmap-tonal-1.png" width="100%" style="display: block; margin: auto;" />
+
+### Diverging heatmap
+
+``` r
+ggplot(heatmap_df, aes(month, service, fill = deviation)) +
+  geom_tile(colour = "white", linewidth = 0.7) +
+  scale_fill_hf_diverging(
+    low = "blue",
+    mid = "grey_blue",
+    high = "red",
+    midpoint = 0,
+    breaks = c(-10, -5, 0, 5, 10),
+    guide = guide_colourbar(barwidth = 10, barheight = 0.5, title.position = "top"),
+    name = "Deviation"
+  ) +
+  coord_equal() +
+  labs(
+    title = "Diverging heatmap",
+    subtitle = "Best when values move above and below a meaningful midpoint",
+    x = NULL,
+    y = NULL
+  )
+```
+
+<img src="man/figures/README-heatmap-diverging-1.png" width="100%" style="display: block; margin: auto;" />
+
+### Classified heatmap
+
+``` r
+heatmap_df$status <- cut(
+  heatmap_df$deviation,
+  breaks = c(-Inf, -5, 0, 5, Inf),
+  labels = c("Low", "Below target", "On track", "High")
+)
+
+ggplot(heatmap_df, aes(month, service, fill = status)) +
+  geom_tile(colour = "white", linewidth = 0.7) +
+  scale_fill_manual(
+    values = unname(hf_palette(c("blue", "grey_blue", "yellow", "red"))),
+    drop = FALSE,
+    name = "Status"
+  ) +
+  coord_equal() +
+  labs(
+    title = "Classified heatmap",
+    subtitle = "Best when values map to named thresholds or action levels",
+    x = NULL,
+    y = NULL
+  )
+```
+
+<img src="man/figures/README-heatmap-classified-1.png" width="100%" style="display: block; margin: auto;" />
 
 ## Source
 

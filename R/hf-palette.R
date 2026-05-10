@@ -77,3 +77,85 @@ scale_fill_hf <- function(..., reverse = FALSE) {
     ...
   )
 }
+
+.hf_resolve_colours <- function(colours) {
+  palette_names <- names(.hf_colours)
+  is_named_colour <- colours %in% palette_names
+  resolved <- colours
+  resolved[is_named_colour] <- .hf_colours[colours[is_named_colour]]
+  valid <- vapply(
+    resolved,
+    function(colour) {
+      !inherits(try(grDevices::col2rgb(colour), silent = TRUE), "try-error")
+    },
+    logical(1)
+  )
+  if (any(!valid)) {
+    stop(
+      "Unknown colour name(s) or invalid colour(s): ",
+      paste(colours[!valid], collapse = ", "),
+      call. = FALSE
+    )
+  }
+  resolved
+}
+
+#' Continuous ggplot2 fill scales for heatmaps
+#'
+#' These scales are intended for heatmaps and other continuous fill aesthetics
+#' where the profile colours should be used as a gradient.
+#'
+#' @param ... Additional arguments passed to the ggplot2 scale.
+#' @param colours Character vector of profile colour names or HEX colours used
+#'   for the gradient.
+#' @param reverse If `TRUE`, reverse the colour order.
+#' @param values Optional numeric vector passed to
+#'   [ggplot2::scale_fill_gradientn()].
+#' @param na.value Colour for missing values.
+#'
+#' @return A ggplot2 scale.
+#' @export
+scale_fill_hf_tonal <- function(
+  ...,
+  colours = c("grey_blue", "light_green", "mint", "green", "blue"),
+  reverse = FALSE,
+  values = NULL,
+  na.value = "#F4F6F8"
+) {
+  resolved <- .hf_resolve_colours(colours)
+  if (reverse) {
+    resolved <- rev(resolved)
+  }
+
+  ggplot2::scale_fill_gradientn(
+    colours = resolved,
+    values = values,
+    na.value = na.value,
+    ...
+  )
+}
+
+#' @rdname scale_fill_hf_tonal
+#'
+#' @param low,mid,high Profile colour names or HEX colours for low, midpoint,
+#'   and high values.
+#' @param midpoint Numeric midpoint for the diverging scale.
+#'
+#' @export
+scale_fill_hf_diverging <- function(
+  ...,
+  low = "blue",
+  mid = "grey_blue",
+  high = "red",
+  midpoint = 0,
+  na.value = "#F4F6F8"
+) {
+  ggplot2::scale_fill_gradient2(
+    low = .hf_resolve_colours(low),
+    mid = .hf_resolve_colours(mid),
+    high = .hf_resolve_colours(high),
+    midpoint = midpoint,
+    na.value = na.value,
+    ...
+  )
+}

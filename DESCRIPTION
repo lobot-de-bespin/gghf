@@ -6,7 +6,8 @@ Authors@R:
            role = c("aut", "cre"))
 Author: Per Trygge Flemmen [aut, cre]
 Maintainer: Per Trygge Flemmen <per.trygge@flemmen.no>
-Description: Provides a ggplot2 theme and colour scales aligned with the
+Description: Provides a ggplot2 theme and colour scales, including heatmap
+    scales, aligned with the
     national visual identity programme for Norwegian health trusts
     (Nasjonalt profilprogram for helseforetakene).
 License: MIT + file LICENSE
