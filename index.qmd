@@ -8,7 +8,6 @@ format:
     slide-number: true
     chalkboard: false
     preview-links: auto
-    embed-resources: true
 execute:
   echo: false
   warning: false
